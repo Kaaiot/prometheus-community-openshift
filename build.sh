@@ -35,6 +35,7 @@ for chart in $(find charts -maxdepth 1 -type d); do
 done
 #all stuff is now work1/.cr-release-packages
 
+git remote set-url origin https://github.com/Kaaiot/prometheus-community-openshift.git
 #upload packages
 ./cr upload -o $USERNAME -r prometheus-community-openshift --packages-with-index -p .cr-release-packages -t $TOKEN --push
 #create index

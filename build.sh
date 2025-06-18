@@ -36,7 +36,7 @@ done
 #all stuff is now work1/.cr-release-packages
 
 #upload packages
-./cr upload -o $USERNAME -r prometheus-community-openshift --packages-with-index -p ../.cr-release-packages -t $TOKEN --push
+./cr upload -o $USERNAME -r prometheus-community-openshift --packages-with-index -p .cr-release-packages -t $TOKEN --push
 #create index
-./cr index -o $USERNAME -r prometheus-community-openshift --packages-with-index -i . -p ../.cr-release-packages -t $TOKEN --push
+./cr index -o $USERNAME -r prometheus-community-openshift --packages-with-index -i . -p .cr-release-packages -t $TOKEN --push
 

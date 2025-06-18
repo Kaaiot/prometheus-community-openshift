@@ -20,14 +20,14 @@ chmod +x yq
 #yq is now work1/yq
 
 #adding deps
-for file in $(find prometheus-community-openshift/charts/ -name 'Chart.yaml'); do
+for file in $(find charts/ -name 'Chart.yaml'); do
   ./yq '.dependencies[] | "./helm repo add \(.name) \(.repository)"' $file >> deps.sh
 done
 bash deps.sh
 rm -f deps.sh
 
 #building shit
-for chart in $(find prometheus-community-openshift/charts -maxdepth 1 -type d); do
+for chart in $(find charts -maxdepth 1 -type d); do
   ./cr package $chart
 done
 #all stuff is now work1/.cr-release-packages

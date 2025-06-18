@@ -1,0 +1,22 @@
+name: Build Charts
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'charts/**'
+
+jobs:
+  build:
+    name: Run build.sh on helm-builder runner
+    runs-on: [self-hosted, helm-builder]
+
+    env:
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run build script
+        run: ./build.sh

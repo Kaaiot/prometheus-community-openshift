@@ -23,20 +23,20 @@ jobs:
           fetch-depth: 0  # Needed to switch branches
           token: ${{ secrets.TOKEN }}
 
-      - name: Delete files in test1 branch
+      - name: Delete files in gh-pages branch
         run: |
           git config user.name $USERNAME
           git config user.email $EMAIL
           git remote set-url origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}
           git checkout gh-pages
           
-          # Delete all .tgz files in 'charts/' or anything you need
           find . -name '*.tgz' -exec git rm -f {} \;
           git rm -f index.yaml || echo "index.yaml not found, skipping"
           
-          git commit -m "Clean up charts/*.tgz before build" || echo "No changes to commit"
+          git commit -m "Clean up pages before build" || echo "No changes to commit"
           git push origin gh-pages
           git checkout main
+          
       - name: Delete all GitHub releases and tags
         env:
           TOKEN: ${{ secrets.TOKEN }}

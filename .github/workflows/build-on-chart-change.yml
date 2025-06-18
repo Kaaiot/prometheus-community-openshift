@@ -12,8 +12,6 @@ jobs:
     name: Run build.sh on helm-builder runner
     runs-on: [self-hosted, helm-builder]
 
-    env:
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

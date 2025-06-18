@@ -28,7 +28,7 @@ cat deps.sh
 rm -f deps.sh
 
 #building shit
-for chart in $(find charts -maxdepth 1 -type d); do
+for chart in $(find charts -maxdepth 1 -mindepth 1 -type d); do
   ./cr package $chart
 done
 

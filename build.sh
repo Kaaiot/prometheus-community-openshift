@@ -26,7 +26,7 @@ chmod +x yq
 for file in $(find charts/ -name 'Chart.yaml'); do
   ./yq '.dependencies[] | "./helm repo add \(.name) \(.repository)"' $file >> deps.sh
 done
-bash deps.sh
+bash deps.sh > /dev/null 2>&1
 rm -f deps.sh
 
 #building shit

@@ -25,9 +25,9 @@ jobs:
 
       - name: Delete files in test1 branch
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-
+          git config user.name $USERNAME
+          git config user.email $EMAIL
+          git remote set-url origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}
           git checkout gh-pages
           
           # Delete all .tgz files in 'charts/' or anything you need

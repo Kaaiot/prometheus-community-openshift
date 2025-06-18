@@ -726,11 +726,7 @@ server:
 
   ## Security context to be added to server pods
   ##
-  securityContext:
-    runAsUser: 65534
-    runAsNonRoot: true
-    runAsGroup: 65534
-    fsGroup: 65534
+  securityContext: {}
 
   ## Security context to be added to server container
   ##
@@ -1303,11 +1299,7 @@ alertmanager:
   persistence:
     size: 2Gi
 
-  podSecurityContext:
-    runAsUser: 65534
-    runAsNonRoot: true
-    runAsGroup: 65534
-    fsGroup: 65534
+  podSecurityContext: {}
 
 ## kube-state-metrics sub-chart configurable values
 ## Please see https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-state-metrics
@@ -1328,8 +1320,7 @@ prometheus-node-exporter:
   rbac:
     pspEnabled: false
 
-  containerSecurityContext:
-    allowPrivilegeEscalation: false
+  containerSecurityContext: {}
 
 ## prometheus-pushgateway sub-chart configurable values
 ## Please see https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-pushgateway

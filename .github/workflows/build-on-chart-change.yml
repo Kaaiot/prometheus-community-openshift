@@ -32,7 +32,7 @@ jobs:
           
           # Delete all .tgz files in 'charts/' or anything you need
           find . -name '*.tgz' -exec git rm -f {} \;
-          git rm -f index.yaml
+          git rm -f index.yaml || echo "index.yaml not found, skipping"
           
           git commit -m "Clean up charts/*.tgz before build" || echo "No changes to commit"
           git push origin gh-pages

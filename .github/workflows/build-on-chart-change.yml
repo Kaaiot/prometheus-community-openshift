@@ -11,10 +11,32 @@ jobs:
   build:
     name: Run build.sh on helm-builder runner
     runs-on: [self-hosted, helm-builder]
+    env:
+      EMAIL: ${{ secrets.EMAIL }}
+      USERNAME: ${{ secrets.USERNAME }}
+      TOKEN: ${{ secrets.TOKEN }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Needed to switch branches
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Delete files in test1 branch
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git checkout test1
+          
+          # Delete all .tgz files in 'charts/' or anything you need
+          find charts/ -name '*.tgz' -exec git rm -f {} \;
+
+          git commit -m "Clean up charts/*.tgz before build" || echo "No changes to commit"
+          git push origin test1
+
+          git checkout main
   
       - name: Make build.sh executable
         run: chmod +x ./build.sh

@@ -28,14 +28,14 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          git checkout test1
+          git checkout gh-pages
           
           # Delete all .tgz files in 'charts/' or anything you need
-          find charts/ -name '*.tgz' -exec git rm -f {} \;
-
+          find . -name '*.tgz' -exec git rm -f {} \;
+          git rm -f index.yaml
+          
           git commit -m "Clean up charts/*.tgz before build" || echo "No changes to commit"
-          git push origin test1
-
+          git push origin gh-pages
           git checkout main
   
       - name: Make build.sh executable

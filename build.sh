@@ -1,7 +1,8 @@
 #!/bin/bash
 
 #download helm
-wget https://get.helm.sh/helm-v3.18.3-linux-amd64.tar.gz
+wget ftp://10.2.12.1/pub/builds/helm-v3.18.3-linux-amd64.tar.gz
+#wget https://get.helm.sh/helm-v3.18.3-linux-amd64.tar.gz
 tar xzf helm-v3.18.3-linux-amd64.tar.gz
 mv linux-amd64/helm helm
 #helm is now work1/helm
@@ -9,13 +10,15 @@ rm -f helm-v3.18.3-linux-amd64.tar.gz
 rm -rf linux-amd64
 
 #download cr
-wget https://github.com/helm/chart-releaser/releases/download/v1.8.1/chart-releaser_1.8.1_linux_amd64.tar.gz
+wget ftp://10.2.12.1/pub/builds/chart-releaser_1.8.1_linux_amd64.tar.gz
+#wget https://github.com/helm/chart-releaser/releases/download/v1.8.1/chart-releaser_1.8.1_linux_amd64.tar.gz
 tar xzf chart-releaser_1.8.1_linux_amd64.tar.gz
 #cr is now work1/cr
 rm -f chart-releaser_1.8.1_linux_amd64.tar.gz
 
 #download yq
-wget "https://github.com/mikefarah/yq/releases/download/v4.44.1/yq_linux_amd64" -O yq
+wget ftp://10.2.12.1/pub/builds/yq_linux_amd64 -O yq
+#wget "https://github.com/mikefarah/yq/releases/download/v4.44.1/yq_linux_amd64" -O yq
 chmod +x yq
 #yq is now work1/yq
 

@@ -33,19 +33,19 @@ type: application
 dependencies:
   - name: alertmanager
     version: "1.20.*"
-    repository: https://prometheus-community.github.io/helm-charts
+    repository: https://kaaiot.github.io/prometheus-community-openshift
     condition: alertmanager.enabled
   - name: kube-state-metrics
     version: "5.33.*"
-    repository: https://prometheus-community.github.io/helm-charts
+    repository: https://kaaiot.github.io/prometheus-community-openshift
     condition: kube-state-metrics.enabled
   - name: prometheus-node-exporter
     version: "4.46.*"
-    repository: https://prometheus-community.github.io/helm-charts
+    repository: https://kaaiot.github.io/prometheus-community-openshift
     condition: prometheus-node-exporter.enabled
   - name: prometheus-pushgateway
     version: "3.3.*"
-    repository: https://prometheus-community.github.io/helm-charts
+    repository: https://kaaiot.github.io/prometheus-community-openshift
     condition: prometheus-pushgateway.enabled
 keywords:
   - monitoring

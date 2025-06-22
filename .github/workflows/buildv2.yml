@@ -1,0 +1,121 @@
+name: Build Charts and Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'charts/**'
+
+jobs:
+  build:
+    name: Run build.sh and release charts
+    runs-on: [self-hosted, helm-builder]
+    env:
+      EMAIL: ${{ secrets.EMAIL }}
+      USERNAME: ${{ secrets.USERNAME }}
+      TOKEN: ${{ secrets.TOKEN }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.TOKEN }}
+
+#      - name: Clean gh-pages branch
+#        run: |
+#          git config user.name "$USERNAME"
+#          git config user.email "$EMAIL"
+#          git remote set-url origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}
+#          git checkout gh-pages
+#          
+#          find . -name '*.tgz' -exec git rm -f {} \;
+#          git rm -f index.yaml || echo "index.yaml not found, skipping"
+#          
+#          git commit -m "Clean up pages before build" || echo "No changes to commit"
+#          git push origin gh-pages
+#          git checkout main
+#
+#      - name: Delete all GitHub releases and tags
+#        run: |
+#          releases=$(curl -s -H "Authorization: token $TOKEN" \
+#            "https://api.github.com/repos/${{ github.repository }}/releases" | jq -r '.[] | [.id, .tag_name] | @tsv')
+#
+#          if [ -z "$releases" ]; then
+#            echo "No releases to delete."
+#            exit 0
+#          fi
+#
+#          while IFS=$'\t' read -r release_id tag_name; do
+#            echo "Deleting release ID: $release_id with tag: $tag_name"
+#            curl -s -X DELETE -H "Authorization: token $TOKEN" \
+#              "https://api.github.com/repos/${{ github.repository }}/releases/$release_id"
+#            git push origin --delete "$tag_name" || echo "Tag $tag_name not found remotely."
+#          done <<< "$releases"
+#
+
+      - name: Run build script
+        run: |
+		  chmod +x ./build.sh
+		  ./build.sh
+
+      - name: Switch to gh-pages to prepare .tgz release
+        run: git checkout gh-pages
+
+      - name: Create releases for each .tgz
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          for file in *.tgz; do
+            [ -e "$file" ] || continue
+            base=$(basename "$file" .tgz)
+            tag="${base}"
+
+            echo "Processing $file with tag $tag..."
+
+            # Check if release already exists
+            release_exists=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+              "https://api.github.com/repos/$REPO/releases/tags/$tag" | jq -r '.id // empty')
+
+            if [[ -n "$release_exists" ]]; then
+              echo "Release for tag $tag already exists. Skipping."
+              continue
+            fi
+
+            echo "Creating new tag and release for $tag"
+
+            git tag -f "$tag"
+            git push -f origin "$tag"
+
+            # Create release
+            release_response=$(curl -s -X POST \
+              -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Content-Type: application/json" \
+              -d @- "https://api.github.com/repos/$REPO/releases" <<EOF
+          {
+            "tag_name": "$tag",
+            "name": "$base",
+            "body": "Release for $base",
+            "draft": false,
+            "prerelease": false
+          }
+          EOF
+          )
+
+            upload_url=$(echo "$release_response" | jq -r .upload_url | sed -e "s/{?name,label}//")
+
+            echo "Uploading asset $file to release $tag..."
+            curl -s -X POST \
+              -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Content-Type: application/gzip" \
+              --data-binary @"$file" \
+              "$upload_url?name=$(basename "$file")"
+
+          done
+		  
+      - name: prepare index
+        run: |
+		  git checkout gh-pages
+		  ./cr index -o $USERNAME -r prometheus-community-openshift --packages-with-index -i . -p .cr-release-packages -t $TOKEN --push

@@ -36,7 +36,7 @@ jobs:
 #          git commit -m "Clean up pages before build" || echo "No changes to commit"
 #          git push origin gh-pages
 #          git checkout main
-#
+
 #      - name: Delete all GitHub releases and tags
 #        run: |
 #          releases=$(curl -s -H "Authorization: token $TOKEN" \
@@ -53,7 +53,6 @@ jobs:
 #              "https://api.github.com/repos/${{ github.repository }}/releases/$release_id"
 #            git push origin --delete "$tag_name" || echo "Tag $tag_name not found remotely."
 #          done <<< "$releases"
-#
 
       - name: Run build script
         run: |
@@ -94,15 +93,15 @@ jobs:
               -H "Authorization: token $GITHUB_TOKEN" \
               -H "Content-Type: application/json" \
               -d @- "https://api.github.com/repos/$REPO/releases" <<EOF
-          {
-            "tag_name": "$tag",
-            "name": "$base",
-            "body": "Release for $base",
-            "draft": false,
-            "prerelease": false
-          }
-          EOF
-          )
+{
+  "tag_name": "$tag",
+  "name": "$base",
+  "body": "Release for $base",
+  "draft": false,
+  "prerelease": false
+}
+EOF
+)
 
             upload_url=$(echo "$release_response" | jq -r .upload_url | sed -e "s/{?name,label}//")
 
@@ -112,10 +111,11 @@ jobs:
               -H "Content-Type: application/gzip" \
               --data-binary @"$file" \
               "$upload_url?name=$(basename "$file")"
-
           done
-		  
-      - name: prepare index
+
+      - name: Prepare index
         run: |
           git checkout gh-pages
-          ./cr index -o $USERNAME -r prometheus-community-openshift --packages-with-index -i . -p .cr-release-packages -t $TOKEN --push
+          ./cr index -o $USERNAME -r prometheus-community-openshift \
+            --packages-with-index -i . -p .cr-release-packages -t $TOKEN --push
+	    

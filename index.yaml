@@ -31,6 +31,36 @@ entries:
     urls:
     - alertmanager-1.21.0.tgz
     version: 1.21.0
+  - annotations:
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Chart Source
+          url: https://github.com/prometheus-community/helm-charts
+    apiVersion: v2
+    appVersion: v0.28.1
+    created: "2025-06-22T13:18:30.41551267+03:00"
+    description: The Alertmanager handles alerts sent by client applications such
+      as the Prometheus server.
+    digest: dc2f3550d63e012250aa8fdc2093793cba72417b9643bb73f21c8a6e076e9919
+    home: https://prometheus.io/
+    icon: https://raw.githubusercontent.com/prometheus/prometheus.github.io/master/assets/prometheus_logo-cb55bb5c346.png
+    keywords:
+    - monitoring
+    kubeVersion: '>=1.19.0-0'
+    maintainers:
+    - email: monotek23@gmail.com
+      name: monotek
+      url: https://github.com/monotek
+    - email: naseem@transit.app
+      name: naseemkullah
+      url: https://github.com/naseemkullah
+    name: alertmanager
+    sources:
+    - https://github.com/prometheus/alertmanager
+    type: application
+    urls:
+    - alertmanager-1.20.1.tgz
+    version: 1.20.1
   kube-state-metrics:
   - annotations:
       artifacthub.io/license: Apache-2.0
@@ -65,6 +95,39 @@ entries:
     urls:
     - kube-state-metrics-5.37.0.tgz
     version: 5.37.0
+  - annotations:
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Chart Source
+          url: https://github.com/prometheus-community/helm-charts
+    apiVersion: v2
+    appVersion: 2.15.0
+    created: "2025-06-22T13:18:30.618736581+03:00"
+    description: Install kube-state-metrics to generate and expose cluster-level metrics
+    digest: cbc219bb5e7c8f72417a53b13f2cb59f9b9f7bd7977554fe77aa739a4325d34b
+    home: https://github.com/kubernetes/kube-state-metrics/
+    keywords:
+    - metric
+    - monitoring
+    - prometheus
+    - kubernetes
+    maintainers:
+    - email: tariq.ibrahim@mulesoft.com
+      name: tariq1890
+      url: https://github.com/tariq1890
+    - email: manuel@rueg.eu
+      name: mrueg
+      url: https://github.com/mrueg
+    - email: david@0xdc.me
+      name: dotdc
+      url: https://github.com/dotdc
+    name: kube-state-metrics
+    sources:
+    - https://github.com/kubernetes/kube-state-metrics/
+    type: application
+    urls:
+    - kube-state-metrics-5.33.2.tgz
+    version: 5.33.2
   prometheus:
   - annotations:
       artifacthub.io/license: Apache-2.0
@@ -161,6 +224,38 @@ entries:
     urls:
     - prometheus-node-exporter-4.47.0.tgz
     version: 4.47.0
+  - annotations:
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Chart Source
+          url: https://github.com/prometheus-community/helm-charts
+    apiVersion: v2
+    appVersion: 1.9.1
+    created: "2025-06-22T13:18:30.829297252+03:00"
+    description: A Helm chart for prometheus node-exporter
+    digest: 8e5d15aada4733aba1cb987aab0ed9e95e38cee6a30a4e7f02ee878182a82c2e
+    home: https://github.com/prometheus/node_exporter/
+    keywords:
+    - node-exporter
+    - prometheus
+    - exporter
+    maintainers:
+    - email: gianrubio@gmail.com
+      name: gianrubio
+      url: https://github.com/gianrubio
+    - email: zanhsieh@gmail.com
+      name: zanhsieh
+      url: https://github.com/zanhsieh
+    - email: rootsandtrees@posteo.de
+      name: zeritti
+      url: https://github.com/zeritti
+    name: prometheus-node-exporter
+    sources:
+    - https://github.com/prometheus/node_exporter/
+    type: application
+    urls:
+    - prometheus-node-exporter-4.46.1.tgz
+    version: 4.46.1
   prometheus-pushgateway:
   - annotations:
       artifacthub.io/license: Apache-2.0
@@ -193,4 +288,35 @@ entries:
     urls:
     - prometheus-pushgateway-3.4.0.tgz
     version: 3.4.0
-generated: "2025-06-19T22:48:37.466516128+03:00"
+  - annotations:
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Chart Source
+          url: https://github.com/prometheus-community/helm-charts
+    apiVersion: v2
+    appVersion: v1.11.1
+    created: "2025-06-22T13:18:31.041090433+03:00"
+    description: A Helm chart for prometheus pushgateway
+    digest: 9cff4dd0c2e3ef84b767e41bbd12b0463240fbf1f6ac7c2abdc49e3cd679a265
+    home: https://github.com/prometheus/pushgateway
+    keywords:
+    - pushgateway
+    - prometheus
+    maintainers:
+    - email: gianrubio@gmail.com
+      name: gianrubio
+      url: https://github.com/gianrubio
+    - email: christian.staude@staffbase.com
+      name: cstaud
+      url: https://github.com/cstaud
+    - email: rootsandtrees@posteo.de
+      name: zeritti
+      url: https://github.com/zeritti
+    name: prometheus-pushgateway
+    sources:
+    - https://github.com/prometheus/pushgateway
+    type: application
+    urls:
+    - prometheus-pushgateway-3.3.0.tgz
+    version: 3.3.0
+generated: "2025-06-22T13:18:31.041105655+03:00"

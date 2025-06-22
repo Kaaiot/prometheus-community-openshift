@@ -87,16 +87,14 @@ jobs:
             git tag -f "$tag"
             git push -f origin "$tag"
 
-            # Create release body JSON in temp file
-            cat <<EOT > release.json
-{
-  "tag_name": "$tag",
-  "name": "$base",
-  "body": "Release for $base",
-  "draft": false,
-  "prerelease": false
-}
-EOT
+            # Generate JSON safely
+            echo "{
+              \"tag_name\": \"$tag\",
+              \"name\": \"$base\",
+              \"body\": \"Release for $base\",
+              \"draft\": false,
+              \"prerelease\": false
+            }" > release.json
 
             release_response=$(curl -s -X POST \
               -H "Authorization: token $GITHUB_TOKEN" \

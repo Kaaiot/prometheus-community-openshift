@@ -75,7 +75,7 @@ jobs:
           for repo in $(./helm repo list | tail -n +2 | awk '{print $1}'); do
             ./helm repo remove "$repo" 2>/dev/null || true
           done
-          
+
           for file in $(find charts/ -name 'Chart.yaml'); do
             if ./yq 'has("dependencies") and (.dependencies | length > 0)' "$file" | grep -q true; then
               ./yq -r '.dependencies[] | "\(.name)|\(.repository)"' "$file" | while IFS="|" read -r name repo; do
@@ -90,12 +90,6 @@ jobs:
           # Remove duplicates
           sort -u deps.sh -o deps.sh
 
-#          for file in $(find charts/ -name 'Chart.yaml'); do
-#            if ./yq 'has("dependencies") and (.dependencies | length > 0)' "$file" | grep -q true; then
-#              ./yq -r '.dependencies[] | "./helm repo add \(.name) \(.repository) || echo \"itsOk\""' "$file" >> deps.sh
-#            fi
-#          done
-          
           bash deps.sh
           ./helm repo update 2>/dev/null || true
           rm -f deps.sh

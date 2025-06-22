@@ -32,9 +32,9 @@ for chart in $(find charts -maxdepth 1 -mindepth 1 -type d); do
   ./cr package $chart
 done
 
+git reset --hard
 git checkout gh-pages
 
-git reset --hard
 cp -f .cr-release-packages/* .
 git add *.tgz
 git commit -m "adding packages"

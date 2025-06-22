@@ -23,37 +23,6 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.TOKEN }}
 
-#      - name: Clean gh-pages branch
-#        run: |
-#          git config user.name "$USERNAME"
-#          git config user.email "$EMAIL"
-#          git remote set-url origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}
-#          git checkout gh-pages
-#          
-#          find . -name '*.tgz' -exec git rm -f {} \;
-#          git rm -f index.yaml || echo "index.yaml not found, skipping"
-#          
-#          git commit -m "Clean up pages before build" || echo "No changes to commit"
-#          git push origin gh-pages
-#          git checkout main
-
-#      - name: Delete all GitHub releases and tags
-#        run: |
-#          releases=$(curl -s -H "Authorization: token $TOKEN" \
-#            "https://api.github.com/repos/${{ github.repository }}/releases" | jq -r '.[] | [.id, .tag_name] | @tsv')
-#
-#          if [ -z "$releases" ]; then
-#            echo "No releases to delete."
-#            exit 0
-#          fi
-#
-#          while IFS=$'\t' read -r release_id tag_name; do
-#            echo "Deleting release ID: $release_id with tag: $tag_name"
-#            curl -s -X DELETE -H "Authorization: token $TOKEN" \
-#              "https://api.github.com/repos/${{ github.repository }}/releases/$release_id"
-#            git push origin --delete "$tag_name" || echo "Tag $tag_name not found remotely."
-#          done <<< "$releases"
-
       - name: Run build script
         run: |
           wget ftp://10.2.12.1/pub/builds/helm-v3.18.3-linux-amd64.tar.gz

@@ -13,7 +13,7 @@ Kubernetes 1.14+
 ## Get Repository Info
 
 ```console
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts 
 helm repo update
 ```
 

@@ -71,11 +71,12 @@ jobs:
           wget ftp://10.2.12.1/pub/builds/yq_linux_amd64 -O yq
           #wget "https://github.com/mikefarah/yq/releases/download/v4.44.1/yq_linux_amd64" -O yq
           chmod +x yq
-          
+          echo "for yq start"
           for file in $(find charts/ -name 'Chart.yaml'); do
+            echo "inside for"
             ./yq '.dependencies[] | "./helm repo add \(.name) \(.repository)"' $file >> deps.sh
           done
-          
+          echo "deps..."
           bash deps.sh > /dev/null 2>&1
           cat deps.sh
           rm -f deps.sh

@@ -32,9 +32,17 @@ for chart in $(find charts -maxdepth 1 -mindepth 1 -type d); do
   ./cr package $chart
 done
 
-git remote set-url origin https://github.com/Kaaiot/prometheus-community-openshift.git
+git checkout gh-pages
+
+cp -f .cr-release-packages/* .
+git add *.tgz
+git commit -m "adding packages"
+git push origin gh-pages
+
+
+#git remote set-url origin https://github.com/Kaaiot/prometheus-community-openshift.git
 #upload packages
-./cr upload -o $USERNAME -r prometheus-community-openshift --packages-with-index -p .cr-release-packages -t $TOKEN --push
+#./cr upload -o $USERNAME -r prometheus-community-openshift --packages-with-index -p .cr-release-packages -t $TOKEN --push
 #create index
-./cr index -o $USERNAME -r prometheus-community-openshift --packages-with-index -i . -p .cr-release-packages -t $TOKEN --push
+#./cr index -o $USERNAME -r prometheus-community-openshift --packages-with-index -i . -p .cr-release-packages -t $TOKEN --push
 

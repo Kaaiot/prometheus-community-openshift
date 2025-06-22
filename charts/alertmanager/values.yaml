@@ -73,10 +73,6 @@ hostAliases: []
   #   - "foo.remote"
   #   - "bar.remote"
 securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
 
 additionalPeers: []
 

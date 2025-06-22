@@ -1,5 +1,5 @@
 {{- if .Values.networkPolicy }}
-apiVersion: networking.k8s.io/v1
+apiVersion: {{ include "prometheus-pushgateway.networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   labels:

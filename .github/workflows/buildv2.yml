@@ -73,7 +73,7 @@ jobs:
           chmod +x yq
           
           for file in $(find charts/ -name 'Chart.yaml'); do
-            ./yq '.dependencies[] | "./helm repo add \(.name) \(.repository) || echo \"123\""' $file >> deps.sh
+            ./yq '.dependencies[] | "./helm repo add \(.name) \(.repository) || echo \"itsOk\""' $file >> deps.sh
           done
           
           bash deps.sh

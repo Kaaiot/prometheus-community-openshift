@@ -84,15 +84,11 @@ jobs:
             fi
 
             echo "Creating new tag and release for $tag"
-
             git tag -f "$tag"
             git push -f origin "$tag"
 
-            # Create release
-            release_response=$(curl -s -X POST \
-              -H "Authorization: token $GITHUB_TOKEN" \
-              -H "Content-Type: application/json" \
-              -d @- "https://api.github.com/repos/$REPO/releases" <<EOF
+            # Create release body JSON in temp file
+            cat <<EOT > release.json
 {
   "tag_name": "$tag",
   "name": "$base",
@@ -100,8 +96,13 @@ jobs:
   "draft": false,
   "prerelease": false
 }
-EOF
-)
+EOT
+
+            release_response=$(curl -s -X POST \
+              -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Content-Type: application/json" \
+              --data @release.json \
+              "https://api.github.com/repos/$REPO/releases")
 
             upload_url=$(echo "$release_response" | jq -r .upload_url | sed -e "s/{?name,label}//")
 

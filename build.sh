@@ -34,6 +34,7 @@ done
 
 git checkout gh-pages
 
+git reset --hard
 cp -f .cr-release-packages/* .
 git add *.tgz
 git commit -m "adding packages"

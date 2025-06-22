@@ -71,6 +71,10 @@ jobs:
           wget ftp://10.2.12.1/pub/builds/yq_linux_amd64 -O yq
           #wget "https://github.com/mikefarah/yq/releases/download/v4.44.1/yq_linux_amd64" -O yq
           chmod +x yq
+
+          for repo in $(./helm repo list | tail -n +2 | awk '{print $1}'); do
+            ./helm repo remove "$repo" 2>/dev/null || true
+          done
           
           for file in $(find charts/ -name 'Chart.yaml'); do
             if ./yq 'has("dependencies") and (.dependencies | length > 0)' "$file" | grep -q true; then
@@ -79,7 +83,7 @@ jobs:
           done
           
           bash deps.sh
-          cat deps.sh
+          ./helm repo update 2>/dev/null || true
           rm -f deps.sh
           
           for chart in $(find charts -maxdepth 1 -mindepth 1 -type d); do
